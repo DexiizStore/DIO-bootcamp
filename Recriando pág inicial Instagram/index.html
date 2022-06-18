@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
     <title>Instagram</title>
 </head>
 <body>
-    <div class="instagram-container">
+    <main class="instagram-container">
         <img src="./img/instagram-celular.png" alt="celular" />
         <div>
-            <div class="instagram-login-form">
-                <img src="./img/instagram-logo.png" />
+
+            <section class="instagram-login-form">
+                <h1>Tecnogram</h1>
                 <form>
                     <input type="text" name="username" placeholder="Telefone, nome de usuário ou email" />
                     <input type="password" name="password" placeholder="Senha" />
@@ -24,25 +30,47 @@
                 </div>
                 
                 <div class="instagram-other">
-                    <a href="#"><img src="./img/facebook-icon.png" />
+                    <a href="#"><img src="./img/facebook-icon.png" alt="facebook icon"/>
                         Entrar com o Facebook</a>
                     <a href="#">Esqueceu sua senha?</a>
                 </div>
-            </div>
-            <div class="instagram-login-form create-account">
+            </section>
+
+            <section class="instagram-login-form create-account">
                 <span>Não tem uma conta?</span>
-                <a>Cadastre-se</a>
-            </div>
+                <a href="#">Cadastre-se</a>
+            </section>
 
             <div class="instagram-apk">
                 <span>Obtenha o aplicativo.</span>
                 <div>
-                    <img src="./img/apple-button.png"/>
-                    <img src="./img/googleplay-button.png"/>
+                    <img src="./img/apple-button.png" alt="download ios"/>
+                    <img src="./img/googleplay-button.png" alt="download android"/>
                 </div>
-                
             </div>
+            
         </div>
-    </div>
+    </main>
+    <footer>
+        <div>
+            <span>Meta</span>
+            <span>Sobre</span>
+            <span>Blog</span>
+            <span>Carreiras</span>
+            <span>Ajuda</span>
+            <span>API</span>
+            <span>Privacidade</span>
+            <span>Termos</span>
+            <span>Principais contas</span>
+            <span>Hashtags</span>
+            <span>Localizações</span>
+            <span>Tecnogram Lite</span>
+        </div>  
+        <div>
+            <span>Português (Brasil)</span>
+            <span>Tecnogram from Meta</span>
+        </div>
+        
+    </footer>
 </body>
 </html>
