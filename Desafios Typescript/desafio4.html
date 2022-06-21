@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio 4 Typescript - DIO</title>
+
+    <link rel="stylesheet" href="./src/desafio4/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="./src/desafio4/svg/logo.svg" alt="site-logo">
+        </header>
+        <section class="login-container">
+            <header>
+                <h1>Entre com a sua conta</h1>
+                <p>
+                    Para continuar, é necessário possuir um cadastro no themoviedb, caso já possua preencha o usuário e senha, e clique em continuar.
+                    <br>Se não, <a href="https://www.themoviedb.org/signup" target="_blank">clique aqui</a> para realiza-lo.
+                </p>
+            </header>
+            <form class="login-campos">
+                <input id="login" autocomplete=off type="text" placeholder="Usuário" onkeyup="validateLoginButton()">
+                <input id="senha" type="password" placeholder="Senha" type="password" onkeyup="validateLoginButton()">
+                <span id="login-error">Login ou senha inválidos!</span>
+                <button id="login-button" type="submit" onclick="loginUser(event)" disabled>Continuar</button>
+                
+            </form>
+        </section>
+        <section class="mainContainer">
+            <header class="headerContent">
+                <button type="button" id="btnBuscar" class="headerButton"><i class="fas fa-search"></i><br>Buscar</button>
+                <button type="button" id="btnMinhasListas" class="headerButton"><i class="fas fa-book"></i><br>Minhas listas</button>
+            </header>
+            <main class="bodyContent">
+                <div class="searchDiv">
+                    <input type="button" value="Pesquisar" id="search-button"/>
+                    <div class="searchBorder">
+                        <input type="text" id="inputSearch"/>
+                    </div>
+                </div>
+                <div class="resultList">
+                    Nenhum resultado foi encontrado!
+                </div>
+            </main>
+        </section>
+    </div>
+    <footer class="footerContent"></footer>
+    <!-- <div style="display: flex;">
+        <div style="display: flex; width: 300px; height: 100px; justify-content: space-between; flex-direction: column;">
+            <input id="login" placeholder="Login" onchange="preencherLogin(event)">
+            <input id="senha" placeholder="Senha" type="password" onchange="preencherSenha(event)">
+            <input id="api-key" placeholder="Api Key" onchange="preencherApi()">
+            <button id="login-button" disabled>Login</button>
+        </div>
+        <div id="search-container" style="margin-left: 20px">
+            <input id="search" placeholder="Escreva...">
+            <button id="search-button">Pesquisar Filme</button>
+        </div>
+    </div> -->
+</body>
+<script src="./dist/desafio4/desafio4.js"></script>
+</html>
