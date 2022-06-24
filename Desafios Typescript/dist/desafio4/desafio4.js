@@ -43,11 +43,18 @@ var sessionId;
 var listId = '8207594';
 var loginButton = document.getElementById('login-button');
 var searchButton = document.getElementById('search-button');
-var searchContainer = document.getElementById('search-container');
 window.onload = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var searchImage, images;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                searchImage = document.getElementsByClassName('search-image')[0];
+                images = [
+                    './imgs/background1.png',
+                    './imgs/background2.png',
+                    './imgs/background3.png'
+                ];
+                searchImage.style.backgroundImage = ("linear-gradient(90deg, rgba(85,115,64,0.8) 0%, rgba(207,217,132,0) 100%),url('" + images[Math.floor(Math.random() * images.length)] + "')");
                 if (!!localStorage.getItem('sessionToken')) return [3 /*break*/, 2];
                 return [4 /*yield*/, criarRequestToken()];
             case 1:
@@ -82,8 +89,30 @@ function loginUser(e) {
     });
 }
 searchButton.addEventListener('click', function () { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        return [2 /*return*/];
+    var lista, query, listaDeFilmes, ul, _i, _a, item, li;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                lista = document.getElementById("resultList");
+                if (lista) {
+                    lista.innerHTML = "";
+                }
+                query = document.getElementById('inputSearch').value;
+                return [4 /*yield*/, procurarFilme(query)];
+            case 1:
+                listaDeFilmes = _b.sent();
+                ul = document.createElement('ul');
+                ul.id = "search-result";
+                for (_i = 0, _a = listaDeFilmes.results; _i < _a.length; _i++) {
+                    item = _a[_i];
+                    li = document.createElement('li');
+                    li.appendChild(document.createTextNode(item.original_title));
+                    ul.appendChild(li);
+                }
+                console.log(listaDeFilmes);
+                lista.appendChild(ul);
+                return [2 /*return*/];
+        }
     });
 }); });
 function validateLoginButton() {
@@ -106,6 +135,7 @@ function loginError(r) {
 }
 function sessionCreated() {
     document.getElementsByClassName('login-container')[0].style.display = 'none';
+    document.getElementsByClassName('header-btn-logged')[0].style.display = 'flex';
     document.getElementsByClassName('mainContainer')[0].style.display = 'block';
 }
 var HttpClient = /** @class */ (function () {
@@ -147,6 +177,23 @@ var HttpClient = /** @class */ (function () {
     };
     return HttpClient;
 }());
+/** LOAD FILMES PAG INICIAL */
+function trendingDay() {
+    return __awaiter(this, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, HttpClient.get({
+                        url: "https://api.themoviedb.org/3/trending/movie/day?api_key=".concat(apiKey),
+                        method: "GET"
+                    })];
+                case 1:
+                    result = _a.sent();
+                    return [2 /*return*/, result];
+            }
+        });
+    });
+}
 function procurarFilme(query) {
     return __awaiter(this, void 0, void 0, function () {
         var result;

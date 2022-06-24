@@ -7,12 +7,20 @@ let listId = '8207594';
 
 let loginButton = document.getElementById('login-button') as HTMLButtonElement;
 let searchButton = document.getElementById('search-button') as HTMLButtonElement;
-let searchContainer = document.getElementById('search-container') as HTMLDivElement;
 
 window.onload = async () => {
-  if (!localStorage.getItem('sessionToken')) await criarRequestToken();
-  if (!(localStorage.getItem('auth') === 'true'))return;
-  sessionCreated();
+    const searchImage = document.getElementsByClassName('search-image')[0] as HTMLDivElement;
+    const images = [
+        './imgs/background1.png',
+        './imgs/background2.png',
+        './imgs/background3.png'
+    ]
+    searchImage.style.backgroundImage = (`linear-gradient(90deg, rgba(85,115,64,0.8) 0%, rgba(207,217,132,0) 100%),url('`+images[Math.floor(Math.random() * images.length)]+`')`);
+
+
+    if (!localStorage.getItem('sessionToken')) await criarRequestToken();
+    if (!(localStorage.getItem('auth') === 'true'))return;
+    sessionCreated();
 }
 
 async function loginUser(e:Event) {
@@ -22,24 +30,25 @@ async function loginUser(e:Event) {
     await logar();
     await criarSessao();
     sessionCreated();
+    
 }
 
 searchButton.addEventListener('click', async () => {
-    /*let lista = document.getElementById("lista");
+    let lista = document.getElementById("resultList") as HTMLDivElement;
     if (lista) {
-        lista.outerHTML = "";
+        lista.innerHTML = "";
     }
-    let query = (document.getElementById('search') as HTMLInputElement).value;
+    let query = (document.getElementById('inputSearch') as HTMLInputElement).value;
     let listaDeFilmes: any = await procurarFilme(query);
     let ul = document.createElement('ul');
-    ul.id = "lista"
+    ul.id = "search-result"
     for (const item of listaDeFilmes.results) {
         let li = document.createElement('li');
         li.appendChild(document.createTextNode(item.original_title))
         ul.appendChild(li)
     }
     console.log(listaDeFilmes);
-    searchContainer.appendChild(ul);*/
+    lista.appendChild(ul);
 })
 
 function validateLoginButton() {
@@ -63,6 +72,7 @@ function loginError(r:boolean){
 
 function sessionCreated(){
   (document.getElementsByClassName('login-container')[0] as HTMLDivElement).style.display = 'none';
+  (document.getElementsByClassName('header-btn-logged')[0] as HTMLDivElement).style.display = 'flex';
   (document.getElementsByClassName('mainContainer')[0] as HTMLDivElement).style.display = 'block';
 
 }
@@ -104,6 +114,26 @@ class HttpClient {
     }
     
 }
+
+
+/** LOAD FILMES PAG INICIAL */
+async function trendingDay() {
+    let result = await HttpClient.get({
+        url: `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`,
+        method: "GET"
+    })
+    return result
+}
+
+
+
+
+
+
+
+
+
+
 
 async function procurarFilme(query:string) {
     query = encodeURI(query)

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio 4 Typescript - DIO</title>
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="header-button cellphone"><i class="fa-regular fa-bars"></i></button>
+            <img alt="site-logo">
+            <div class="header-btn-logged">
+                <button class="header-button desktop-kit"><i class="fa-regular fa-folder-bookmark"></i></button> 
+                <button class="header-button desktop-kit"><i class="fa-regular fa-magnifying-glass"></i></button> 
+                <button class="header-button"><i class="fa-regular fa-power-off"></i></button>
+            </div>
+        </header>
+        <section class="login-container">
+            <header>
+                <h1>Entre com a sua conta</h1>
+                <p>
+                    Para continuar, é necessário possuir um cadastro no themoviedb, caso já possua preencha o usuário e senha, e clique em continuar.
+                    <br>Se não, <a href="https://www.themoviedb.org/signup" target="_blank">clique aqui</a> para realiza-lo.
+                </p>
+            </header>
+            <form class="login-campos">
+                <input id="login" autocomplete=off type="text" placeholder="Usuário" onkeyup="validateLoginButton()">
+                <input id="senha" type="password" placeholder="Senha" type="password" onkeyup="validateLoginButton()">
+                <span id="login-error">Login ou senha inválidos!</span>
+                <button id="login-button" type="submit" onclick="loginUser(event)" disabled>Continuar</button>
+                
+            </form>
+        </section>
+        <section class="mainContainer">
+            <main class="bodyContent">
+                <div class="search-image">
+                    <div>
+                        <h1>Boas Vindas</h1>
+                        <h2>Explore nosso catálogo!</h2>
+                    </div>
+                    
+                    <label class="search-label">
+                        <input type="text" id="inputSearch" placeholder="Buscar por um Filme, Série ou Pessoa..."/>
+                        <button id="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </label>
+                </div>
+                <div id="resultList">
+                    
+                </div>
+            </main>
+        </section>
+    </div>
+    <footer class="footerContent">
+
+
+
+
+
+    </footer>
+    <script src="./desafio4.js"></script>
+</body>
+
+</html>
