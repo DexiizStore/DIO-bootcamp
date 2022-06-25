@@ -3,7 +3,7 @@
 
 :root{
     --background: #f5f5f5;
-    --primary-color: #3C2440;
+    --primary-color: #3c2440;
     --secondary-color: #557340;
     --tertiary-color: #a9bf5a;
     --quaternary-color: #CFD984;
@@ -19,11 +19,130 @@
 body {
     background-color: var(--background);
     font-family: 'Roboto', sans-serif;
+    overflow: hidden;
 }
 
 input:focus{
     outline: none;
 }
+
+#modal{
+    display: block;
+    top: 100%;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--quinary-color);
+    z-index: 999;
+    transition: transform 700ms, opacity 350ms;
+}
+
+.close-modal{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    right: 0;
+    font-size: 2rem;
+    margin: 1rem;
+    color: white;
+    text-shadow: 0 0 10px #FFFFFF;
+}
+
+.modal-header{
+    width: 100%;
+    height: 13rem;
+    background-position: center;
+    background-size: 150%;
+}
+
+.modal-header>div{
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, rgba(60, 36, 64, 0.9) 100px, rgba(255, 255, 255, 0.34) 100%);
+    display: flex;
+    padding: 1rem;
+}
+
+.modal-header>div>img{
+    border-radius: 1rem;
+    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+.modal-desc1{
+    width: 80%;
+    color: white;
+    padding: .5rem;
+}
+
+.modal-desc1>h3{
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.modal-desc1>h3>span{
+    opacity: .7;
+}
+
+.modal-desc1>div{
+    display: flex;
+    flex-direction: column;
+    font-size: .8rem;
+    padding: .6rem 0;
+}
+
+.modal-desc1>h4{
+    opacity: .75;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.modal-stream{
+    padding: 0.5rem;
+    background-image: linear-gradient(180deg, rgba(60, 36, 64, 1) 15%, rgba(255, 255, 255, 0) 100%);
+    color: #ddd;
+}
+
+.modal-stream ul{
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.modal-stream li{
+    list-style: none;
+    margin: 0.3rem;
+}
+
+.modal-stream img{
+    width: 50px;
+    height: 50px;
+    background-position: center;
+    background-size: 100%;
+}
+
+
+.modal-body{
+    padding: 0 1rem;
+    color: #333;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 .desktop-kit{
     display: none;
@@ -35,6 +154,7 @@ input:focus{
     align-items: center;
     flex-direction: row;
     padding: .8rem;
+    height: 10%;
     border-bottom: 1px solid var(--secondary-color);
     background-color: var(--primary-color);
     
@@ -124,7 +244,8 @@ input:focus{
 
 .mainContainer{
     display: none;
-
+    overflow-y: auto;
+    height: 90vh;
 }
 
 .mainContainer>header{
@@ -135,6 +256,7 @@ input:focus{
 .mainContainer>header>button{
     width: 50%;
 }
+
 
 .search-image{
     width: 100vw;
@@ -179,6 +301,105 @@ input:focus{
     border: none;
     border-radius: 1.5rem;
 }
+
+.lista{
+    padding: .5rem;
+    width: 100%;
+    overflow: hidden;
+}
+
+.lista>ul{
+    display: flex;
+    width: 100%;
+    overflow-y: scroll;
+    height: auto;
+}
+
+.lista>ul>li {
+    margin: .6rem;
+    list-style: none;
+    position: relative;
+    
+}
+
+.lista img {
+    width: 125px;
+    height: 175px;
+    border-radius: 1rem;
+    background-position: center;
+    background-size: 100%;
+}
+
+.lista p{
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    padding: .5rem;
+    width: 100%;
+    font-size: .8rem;
+    color: white;
+    position: absolute;
+    text-shadow: 2px 2px 5px #000;
+}
+
+.lista2{
+    padding: .5rem;
+    width: 100%;
+    overflow: hidden;
+}
+
+.lista2>ul{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+
+}
+
+.lista2>ul>li {
+    list-style: none;
+    position: relative;
+    
+}
+
+.lista2 img {
+    width: 7rem;
+    height: 10rem;
+    border-radius: 1rem;
+    background-position: center;
+    background-size: 100%;
+}
+
+.lista2 p{
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    padding: .5rem;
+    width: 100%;
+    font-size: .8rem;
+    color: white;
+    position: absolute;
+    text-shadow: 2px 2px 5px #000;
+}
+
+
+
+
+
+
+.footerContent{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: #ffffffaa;
+    height: 2rem;
+    text-align: center;
+    padding: 0.3rem;
+
+}
+
 
 @media (min-width: 768px) {
     .container>header{
