@@ -61,7 +61,6 @@ window.onload = function () { return __awaiter(void 0, void 0, void 0, function 
                     return [2 /*return*/];
                 auth = localStorage.getItem('auth');
                 sessionId = auth;
-                console.log(sessionId);
                 sessionCreated();
                 return [2 /*return*/];
         }
@@ -103,6 +102,7 @@ function sessionCreated() {
                 case 0:
                     document.getElementsByClassName('login-container')[0].style.display = 'none';
                     document.getElementsByClassName('header-btn-logged')[0].style.display = 'flex';
+                    document.getElementsByClassName('cellphone')[0].style.display = 'block';
                     document.getElementsByClassName('mainContainer')[0].style.display = 'block';
                     trendingList = document.getElementById("trending");
                     topRatedList = document.getElementById("topRated");
@@ -155,7 +155,7 @@ function pushModal(id) {
                     if (provider)
                         provider = provider.flatrate;
                     modal = document.getElementById("modal");
-                    modal.style.transform = 'translateY(-100%)';
+                    modal.style.transform = 'translateY(-105%)';
                     modal.style.opacity = '1';
                     data = item.release_date.split('-');
                     item.genres.map(function (genre) {
@@ -174,7 +174,6 @@ function pushModal(id) {
                     modalStream.innerHTML = '';
                     if (provider) {
                         modalStream.innerHTML = '<p>Disponivel em:</p>';
-                        console.log(provider);
                         ul = document.createElement('ul');
                         for (_i = 0, provider_1 = provider; _i < provider_1.length; _i++) {
                             item_1 = provider_1[_i];
@@ -184,7 +183,7 @@ function pushModal(id) {
                         }
                         modalStream.appendChild(ul);
                     }
-                    modalBody.innerHTML = "\n        <div>\n            <h2>Sinopse</h2>\n            <p>".concat(item.overview, "</p>\n        </div>\n    ");
+                    modalBody.innerHTML = "\n        <h2>Sinopse</h2>\n        <p>".concat(item.overview, "</p>\n    ");
                     modalFooter.innerHTML = "\n    \n    ";
                     return [2 /*return*/];
             }
@@ -196,53 +195,53 @@ function closeModal() {
     modal.style.transform = '';
     modal.style.opacity = '';
 }
-document.getElementById('search-button').addEventListener('click', function () { return __awaiter(void 0, void 0, void 0, function () {
-    var lista, query, listaDeFilmes, ul, _loop_3, _i, listaDeFilmes_1, item;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                document.getElementById("defaultList").style.display = 'none';
-                document.getElementById("page-footer").style.display = 'none';
-                lista = document.getElementById("resultList");
-                if (lista) {
-                    lista.innerHTML = "";
-                }
-                query = document.getElementById('inputSearch').value;
-                return [4 /*yield*/, procurarFilme(query)];
-            case 1:
-                listaDeFilmes = _a.sent();
-                document.getElementById("page-footer").style.display = 'none';
-                if (listaDeFilmes == "") {
-                    lista.innerHTML = "\n            N\u00E3o Encontrado\n        ";
-                    setTimeout(function () {
-                        lista.innerHTML = '';
-                        document.getElementById("defaultList").style.display = 'block';
-                    }, 2000);
-                    return [2 /*return*/];
-                }
-                ul = document.createElement('ul');
-                ul.id = "search-result";
-                console.log(listaDeFilmes);
-                _loop_3 = function (item) {
-                    var imgUrl = item.poster_path;
-                    if (!imgUrl) {
-                        imgUrl = 'https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg';
+function searchBtn(e) {
+    return __awaiter(this, void 0, void 0, function () {
+        var lista, query, listaDeFilmes, ul, _loop_3, _i, listaDeFilmes_1, item;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    e.preventDefault();
+                    document.getElementById("defaultList").style.display = 'none';
+                    lista = document.getElementById("resultList");
+                    if (lista) {
+                        lista.innerHTML = "";
                     }
-                    console.log(imgUrl);
-                    var li = document.createElement('li');
-                    li.onclick = function () { pushModal(item.id); };
-                    li.innerHTML = "\n            <img style='background-image: linear-gradient(0deg, rgba(60, 36, 64,0.8) 0%, rgba(207,217,132,0) 100%),url(\"https://image.tmdb.org/t/p/w200".concat(imgUrl, "\");'/>\n            <p>").concat(item.title, "</p>\n        ");
-                    ul.appendChild(li);
-                };
-                for (_i = 0, listaDeFilmes_1 = listaDeFilmes; _i < listaDeFilmes_1.length; _i++) {
-                    item = listaDeFilmes_1[_i];
-                    _loop_3(item);
-                }
-                lista.appendChild(ul);
-                return [2 /*return*/];
-        }
+                    query = document.getElementById('inputSearch').value;
+                    return [4 /*yield*/, procurarFilme(query)];
+                case 1:
+                    listaDeFilmes = _a.sent();
+                    console.log(listaDeFilmes);
+                    if (listaDeFilmes == "") {
+                        lista.innerHTML = "\n            N\u00E3o Encontrado\n        ";
+                        setTimeout(function () {
+                            lista.innerHTML = '';
+                            document.getElementById("defaultList").style.display = 'block';
+                        }, 2000);
+                        return [2 /*return*/];
+                    }
+                    ul = document.createElement('ul');
+                    ul.id = "search-result";
+                    _loop_3 = function (item) {
+                        var imgUrl = "https://image.tmdb.org/t/p/w200".concat(item.poster_path);
+                        if (!item.poster_path) {
+                            imgUrl = 'https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg';
+                        }
+                        var li = document.createElement('li');
+                        li.onclick = function () { pushModal(item.id); };
+                        li.innerHTML = "\n            <img style='background-image: linear-gradient(0deg, rgba(60, 36, 64,0.8) 0%, rgba(207,217,132,0) 100%),url(".concat(imgUrl, ");'/>\n            <p>").concat(item.title, "</p>\n        ");
+                        ul.appendChild(li);
+                    };
+                    for (_i = 0, listaDeFilmes_1 = listaDeFilmes; _i < listaDeFilmes_1.length; _i++) {
+                        item = listaDeFilmes_1[_i];
+                        _loop_3(item);
+                    }
+                    lista.appendChild(ul);
+                    return [2 /*return*/];
+            }
+        });
     });
-}); });
+}
 function validateLoginButton() {
     var username = document.getElementById('login').value;
     var password = document.getElementById('senha').value;
@@ -279,7 +278,6 @@ var HttpClient = /** @class */ (function () {
                                 status: request.status,
                                 statusText: request.statusText
                             });
-                            console.log('b');
                         };
                         if (body) {
                             request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -365,9 +363,8 @@ function procurarFilme(query) {
             switch (_a.label) {
                 case 0:
                     query = encodeURI(query);
-                    console.log(query);
                     return [4 /*yield*/, HttpClient.get({
-                            url: "https://api.themoviedb.org/3/search/movie?api_key=".concat(apiKey, "&query=").concat(query),
+                            url: "https://api.themoviedb.org/3/search/movie?api_key=".concat(apiKey, "&query=").concat(query, "&language=pt-BR"),
                             method: "GET"
                         })];
                 case 1:
@@ -377,83 +374,45 @@ function procurarFilme(query) {
         });
     });
 }
-function adicionarFilme(filmeId) {
-    return __awaiter(this, void 0, void 0, function () {
-        var result;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, HttpClient.get({
-                        url: "https://api.themoviedb.org/3/movie/".concat(filmeId, "?api_key=").concat(apiKey, "&language=en-US"),
-                        method: "GET"
-                    })];
-                case 1:
-                    result = _a.sent();
-                    console.log(result);
-                    return [2 /*return*/];
-            }
-        });
-    });
+/*
+async function adicionarFilme(filmeId:string) {
+    let result = await HttpClient.get({
+        url: `https://api.themoviedb.org/3/movie/${filmeId}?api_key=${apiKey}&language=en-US`,
+        method: "GET"
+    })
 }
-function criarLista(nomeDaLista, descricao) {
-    return __awaiter(this, void 0, void 0, function () {
-        var result;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, HttpClient.get({
-                        url: "https://api.themoviedb.org/3/list?api_key=".concat(apiKey, "&session_id=").concat(sessionId),
-                        method: "POST",
-                        body: {
-                            name: nomeDaLista,
-                            description: descricao,
-                            language: "pt-br"
-                        }
-                    })];
-                case 1:
-                    result = _a.sent();
-                    console.log(sessionId);
-                    console.log(result);
-                    return [2 /*return*/];
-            }
-        });
-    });
+
+
+
+async function criarLista(nomeDaLista:string, descricao:string) {
+    let result = await HttpClient.get({
+        url: `https://api.themoviedb.org/3/list?api_key=${apiKey}&session_id=${sessionId}`,
+        method: "POST",
+        body: {
+            name: nomeDaLista,
+            description: descricao,
+            language: "pt-br"
+        }
+    })
 }
-function adicionarFilmeNaLista(filmeId, listaId) {
-    return __awaiter(this, void 0, void 0, function () {
-        var result;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, HttpClient.get({
-                        url: "https://api.themoviedb.org/3/list/".concat(listaId, "/add_item?api_key=").concat(apiKey, "&session_id=").concat(sessionId),
-                        method: "POST",
-                        body: {
-                            media_id: filmeId
-                        }
-                    })];
-                case 1:
-                    result = _a.sent();
-                    console.log(result);
-                    return [2 /*return*/];
-            }
-        });
-    });
+
+async function adicionarFilmeNaLista(filmeId:string, listaId:string) {
+    let result = await HttpClient.get({
+        url: `https://api.themoviedb.org/3/list/${listaId}/add_item?api_key=${apiKey}&session_id=${sessionId}`,
+        method: "POST",
+        body: {
+            media_id: filmeId
+        }
+    })
 }
-function pegarLista() {
-    return __awaiter(this, void 0, void 0, function () {
-        var result;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, HttpClient.get({
-                        url: "https://api.themoviedb.org/3/list/".concat(listId, "?api_key=").concat(apiKey),
-                        method: "GET"
-                    })];
-                case 1:
-                    result = _a.sent();
-                    console.log(result);
-                    return [2 /*return*/];
-            }
-        });
-    });
+
+async function pegarLista() {
+    let result = await HttpClient.get({
+        url: `https://api.themoviedb.org/3/list/${listId}?api_key=${apiKey}`,
+        method: "GET"
+    })
 }
+*/
 /** LOGAR USUARIO */
 function criarRequestToken() {
     return __awaiter(this, void 0, void 0, function () {
@@ -479,7 +438,7 @@ function logar(username, password) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    _a.trys.push([0, 2, , 4]);
                     return [4 /*yield*/, HttpClient.get({
                             url: "https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=".concat(apiKey),
                             method: "POST",
@@ -491,12 +450,16 @@ function logar(username, password) {
                         })];
                 case 1:
                     login = _a.sent();
-                    return [3 /*break*/, 3];
+                    return [3 /*break*/, 4];
                 case 2:
                     error_1 = _a.sent();
                     document.getElementById('login-error').style.display = 'block';
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/, login];
+                    localStorage.clear();
+                    return [4 /*yield*/, criarRequestToken()];
+                case 3:
+                    _a.sent();
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/, login];
             }
         });
     });
@@ -507,10 +470,7 @@ function deslogar() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log(apiKey, sessionId);
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 3, , 4]);
+                    _a.trys.push([0, 2, , 3]);
                     return [4 /*yield*/, HttpClient.get({
                             url: "https://api.themoviedb.org/3/authentication/session?api_key=".concat(apiKey),
                             method: "POST",
@@ -518,14 +478,14 @@ function deslogar() {
                                 session_id: "".concat(sessionId)
                             }
                         })];
-                case 2:
+                case 1:
                     _a.sent();
-                    return [3 /*break*/, 4];
-                case 3:
+                    return [3 /*break*/, 3];
+                case 2:
                     error_2 = _a.sent();
                     console.log(error_2);
-                    return [3 /*break*/, 4];
-                case 4:
+                    return [3 /*break*/, 3];
+                case 3:
                     localStorage.clear();
                     location.reload();
                     return [2 /*return*/];

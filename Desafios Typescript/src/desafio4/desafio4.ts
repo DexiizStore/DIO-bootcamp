@@ -16,7 +16,6 @@ window.onload = async () => {
     if (!localStorage.getItem('auth'))return;
     const auth:any = localStorage.getItem('auth')
     sessionId = auth
-    console.log(sessionId)
     sessionCreated();
 }
 
@@ -44,6 +43,7 @@ function resetInitial(){
 async function sessionCreated(){
     (document.getElementsByClassName('login-container')[0] as HTMLDivElement).style.display = 'none';
     (document.getElementsByClassName('header-btn-logged')[0] as HTMLDivElement).style.display = 'flex';
+    (document.getElementsByClassName('cellphone')[0] as HTMLDivElement).style.display = 'block';
     (document.getElementsByClassName('mainContainer')[0] as HTMLDivElement).style.display = 'block';
     
     let trendingList = document.getElementById("trending") as HTMLDivElement;
@@ -79,18 +79,18 @@ async function sessionCreated(){
     topRatedList.appendChild(ul2)
 }
 
-async function pushModal(id){
+async function pushModal(id:any){
     const item = await getMovieDetails(id)
     let provider = await getMovieProvidres(id)
     if(provider)provider = provider.flatrate
 
     let modal = document.getElementById("modal") as HTMLDivElement;
-    modal.style.transform = 'translateY(-100%)'
+    modal.style.transform = 'translateY(-105%)'
     modal.style.opacity = '1'
 
     const data = item.release_date.split('-')
-    let genero;
-    item.genres.map((genre)=>{
+    let genero:any;
+    item.genres.map((genre:any)=>{
         if(!genero){
             genero = genre.name;
             return;
@@ -120,7 +120,6 @@ async function pushModal(id){
     modalStream.innerHTML = ''
     if(provider){
         modalStream.innerHTML = '<p>Disponivel em:</p>'
-        console.log(provider)
         let ul = document.createElement('ul');
         for(const item of provider){
             let li = document.createElement('li');
@@ -133,10 +132,8 @@ async function pushModal(id){
     }
     
     modalBody.innerHTML = `
-        <div>
-            <h2>Sinopse</h2>
-            <p>${item.overview}</p>
-        </div>
+        <h2>Sinopse</h2>
+        <p>${item.overview}</p>
     `;
     modalFooter.innerHTML = `
     
@@ -151,9 +148,9 @@ function closeModal(){
     modal.style.opacity = ''
 }
 
-(document.getElementById('search-button') as HTMLButtonElement).addEventListener('click', async () => {
+async function searchBtn(e:Event) {
+    e.preventDefault();
     (document.getElementById("defaultList") as HTMLDivElement).style.display = 'none';
-    (document.getElementById("page-footer") as HTMLDivElement).style.display = 'none';
     
     let lista = document.getElementById("resultList") as HTMLDivElement;
     if (lista) {
@@ -161,8 +158,8 @@ function closeModal(){
     }
     let query = (document.getElementById('inputSearch') as HTMLInputElement).value;
     let listaDeFilmes: any = await procurarFilme(query);
+    console.log(listaDeFilmes)
 
-    (document.getElementById("page-footer") as HTMLDivElement).style.display = 'none';
     
     if(listaDeFilmes == ""){
         lista.innerHTML = `
@@ -177,28 +174,24 @@ function closeModal(){
 
     let ul = document.createElement('ul');
     ul.id = "search-result"
-    console.log(listaDeFilmes)
     for (const item of listaDeFilmes) {
 
-        let imgUrl = item.poster_path
-        if(!imgUrl){
+        let imgUrl = `https://image.tmdb.org/t/p/w200${item.poster_path}`
+        if(!item.poster_path){
             imgUrl = 'https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg'
         }
 
-
-
-        console.log(imgUrl)
         let li = document.createElement('li');
         li.onclick = ()=>{pushModal(item.id)}
         li.innerHTML = `
-            <img style='background-image: linear-gradient(0deg, rgba(60, 36, 64,0.8) 0%, rgba(207,217,132,0) 100%),url("https://image.tmdb.org/t/p/w200${imgUrl}");'/>
+            <img style='background-image: linear-gradient(0deg, rgba(60, 36, 64,0.8) 0%, rgba(207,217,132,0) 100%),url(${imgUrl});'/>
             <p>${item.title}</p>
         `;
         ul.appendChild(li)
     }
     lista.appendChild(ul);
     
-})
+}
 
 function validateLoginButton() {
     const username = (document.getElementById('login') as HTMLInputElement).value;
@@ -236,7 +229,6 @@ class HttpClient {
                     status: request.status,
                     statusText: request.statusText
                 })
-                console.log('b')
             }
             if (body) {
                 request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -270,7 +262,7 @@ async function topRatedMovie() {
 
 /** PEGAR DETALHES DO FILME */
 
-async function getMovieDetails(movie_id) {
+async function getMovieDetails(movie_id:any) {
     let result:any = await HttpClient.get({
         url: `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${apiKey}&language=pt-BR`,
         method: "GET"
@@ -278,7 +270,7 @@ async function getMovieDetails(movie_id) {
     return result
 }
 
-async function getMovieProvidres(movie_id) {
+async function getMovieProvidres(movie_id:any) {
     let result:any = await HttpClient.get({
         url: `https://api.themoviedb.org/3/movie/${movie_id}/watch/providers?api_key=${apiKey}`,
         method: "GET"
@@ -295,20 +287,19 @@ async function getMovieProvidres(movie_id) {
 
 async function procurarFilme(query:string) {
     query = encodeURI(query)
-    console.log(query)
     let result:any = await HttpClient.get({
-        url: `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`,
+        url: `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}&language=pt-BR`,
         method: "GET"
     })
     return result.results
 }
 
+/*
 async function adicionarFilme(filmeId:string) {
     let result = await HttpClient.get({
         url: `https://api.themoviedb.org/3/movie/${filmeId}?api_key=${apiKey}&language=en-US`,
         method: "GET"
     })
-    console.log(result);
 }
 
 
@@ -323,8 +314,6 @@ async function criarLista(nomeDaLista:string, descricao:string) {
             language: "pt-br"
         }
     })
-    console.log(sessionId);
-    console.log(result);
 }
 
 async function adicionarFilmeNaLista(filmeId:string, listaId:string) {
@@ -335,7 +324,6 @@ async function adicionarFilmeNaLista(filmeId:string, listaId:string) {
             media_id: filmeId
         }
     })
-    console.log(result);
 }
 
 async function pegarLista() {
@@ -343,9 +331,8 @@ async function pegarLista() {
         url: `https://api.themoviedb.org/3/list/${listId}?api_key=${apiKey}`,
         method: "GET"
     })
-    console.log(result);
 }
-
+*/
 
 
 
@@ -365,7 +352,7 @@ async function criarRequestToken() {
     localStorage.setItem('sessionToken', requestToken)
 }
 
-async function logar(username,password) {
+async function logar(username:String,password:String) {
   let login:any
   try {
     login = await HttpClient.get({
@@ -379,13 +366,14 @@ async function logar(username,password) {
     })
   } catch (error) {
     (document.getElementById('login-error') as HTMLDivElement).style.display = 'block'
+    localStorage.clear()
+    await criarRequestToken()
   }
     return login
 }
 
 
 async function deslogar() {
-    console.log(apiKey,sessionId)
     try{
         await HttpClient.get({
             url: `https://api.themoviedb.org/3/authentication/session?api_key=${apiKey}`,
